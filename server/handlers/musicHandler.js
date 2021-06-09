@@ -1,7 +1,37 @@
 'use strict';
 
+const { MusicService } = require('../services/musicService');
+
+/**
+ * @module
+ */
+
 module.exports = {
-    hello: async (request, h) => {
-        return 'Hello World!';
+    /**
+     *  Get track info.
+     *
+     * @param {Request} request - The Hapi request object.
+     * @param {Object} h - The Hapi response toolkit.
+     * @throws {Error} NOT_FOUND - If no tracks match search term.
+     * @throws {Error} If an unknown error occurred.
+     * @returns {Response} Response with top 25 track matches.
+     */
+    getMusicBySearchTerm: async (request, h) => {
+        try {
+            const { searchTerm } = request.query;
+            const cleanedSearchTerm = searchTerm.replace(/\s/g, '+');
+
+            const searchResults = await MusicService.getTracks({ searchTerm: cleanedSearchTerm });
+            return h.response(searchResults).code(200)
+
+        } catch (err) {
+            console.log(err);
+            switch (err.message) {
+                case 'NOT_FOUND':
+                    return h.response('No results').code(404)
+                default:
+                    return h.response().code(500)
+            }
+        }
     }
 };

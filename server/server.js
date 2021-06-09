@@ -3,20 +3,19 @@ const MusicHandler = require('./handlers/musicHandler');
 
 const Hapi = require('@hapi/hapi');
 
+const server = Hapi.server({
+    port: 4000,
+    host: 'localhost',
+    routes: {
+        cors: true
+    }
+});
+
 const init = async () => {
-
-    const server = Hapi.server({
-        port: 4000,
-        host: 'localhost',
-        routes: {
-            cors: true
-        }
-    });
-
     server.route({
         method: 'GET',
-        path: '/',
-        handler: MusicHandler.hello
+        path: '/music',
+        handler: MusicHandler.getMusicBySearchTerm
     });
 
     await server.start();
@@ -30,3 +29,5 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
+
+module.exports = server;
