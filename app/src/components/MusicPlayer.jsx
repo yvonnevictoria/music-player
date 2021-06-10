@@ -1,33 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { TrackList } from './TrackList';
 
-const MusicPlayer = () => {
-    const [message, setMessage] = useState('');
-    const [errors, setErrors] = useState([]);
+import '../stylesheets/MusicPlayer.css';
 
-    const getMessage = () => {
-        axios.get('http://localhost:4000/')
-            .then(function (response) {
-                const { data } = response;
-               setMessage(data);
-            })
-            .catch(function (error) {
-              console.log(error);
-              setErrors(error);
-            });
-    };
+const MusicPlayer = () => (
+    <TrackList />
+);
 
-    useEffect(() => {
-        getMessage();
-    }, []);
-
-    return (
-        <Fragment>
-            <p>{message}</p>
-            { !!errors.length && `${errors}` }
-        </Fragment>
-    );
-};
 
 export {
     MusicPlayer
