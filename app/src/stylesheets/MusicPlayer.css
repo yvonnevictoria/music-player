@@ -8,10 +8,11 @@ ol.tracks {
 li.track {
     padding: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: left;
     cursor: pointer;
-    width: 85%
+    width: 85%;
+    align-items: center;
 }
 
 li.track:hover {
@@ -52,4 +53,15 @@ li.track:hover {
     background: #0375b0;
     border: 3px solid #0375b0;
     cursor: pointer;
+}
+
+.album-art {
+    width: 60px;
+    height: 60px;
+}
+
+.track-info {
+    display: flex;
+    flex-direction: column;
+    padding-left: 8px;
 }
