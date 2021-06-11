@@ -4,7 +4,7 @@ import ReactHowler from 'react-howler'
 import { MediaControls } from './MediaControls';
 import { SearchBar } from './SearchBar';
 
-import '../stylesheets/MusicPlayer.css';
+import '../stylesheets/TrackList.css';
 
 const TrackList = () => {
     const [tracks, setTracks] = useState([]);
@@ -23,6 +23,7 @@ const TrackList = () => {
                setTracks(data);
             })
             .catch(function (error) {
+                console.log(error);
               setErrors(error);
             });
     };
@@ -50,7 +51,7 @@ const TrackList = () => {
             <SearchBar
                 searchTerm={searchTerm}
                 onChange={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm });}}
-                onSearch={() =>  getTracks({ chosenSearchTerm: searchTerm })}
+                onSearch={() => getTracks({ chosenSearchTerm: searchTerm })}
             />
 
             { !!errors.length && `${errors}` }
@@ -63,12 +64,12 @@ const TrackList = () => {
                 Object.entries(tracks).map((track, i) => {
                     const { artistName, trackName, trackTimeMillis, collectionName, trackId, previewUrl, artworkUrl60 } = track[1];
                     return (
-                        <li role="button" className="track" onClick={() => changeAudio({ url: previewUrl, trackId })} key={trackId}>
+                        <li role="button" className={`track ${songPlaying === trackId && 'active-song'}`} onClick={() => changeAudio({ url: previewUrl, trackId })} key={trackId}>
                             <img className="album-art" src={artworkUrl60} alt='Album artwork' />
                             <div className="track-info">
                                 <span>{trackName}</span>
                                 <span>{artistName} | {toMinutes({ ms: trackTimeMillis })}</span>
-                                <span className="album-name">{collectionName}</span>
+                                <span>{collectionName}</span>
                             </div>
                         </li>
                     );

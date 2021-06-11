@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../stylesheets/MusicPlayer.css';
+import '../stylesheets/TrackList.css';
 
 const SearchBar = ({ searchTerm, onChange, onSearch }) => (
     <div className="search">
@@ -11,7 +11,7 @@ const SearchBar = ({ searchTerm, onChange, onSearch }) => (
             name="search-bar"
             className="control-input"
             value={searchTerm}
-            onChange={({ target: { value } }) => onChange}
+            onChange={onChange}
         />
         <button type="button" className="search-btn" onClick={() => onSearch}>
             Search

@@ -9,6 +9,12 @@ ol.tracks {
     background: #f2f2f2;
     display: flex;
     flex-flow: column;
+
+    /* Get rid of automatic margins */
+    margin: 0 0 0 -40px;
+
+    /* To give space for media controls */
+    padding-bottom: 87px;
 }
 
 li.track {
@@ -17,18 +23,16 @@ li.track {
     flex-direction: row;
     text-align: left;
     cursor: pointer;
-    width: 85%;
+    margin: 0 10%;
     align-items: center;
 }
 
 li.track:hover {
     background: white;
-    font-weight: bold;
 }
 
-.albumName {
-    /* TODO YVO: need to fix */
-    overflow: scroll;
+li.active-song {
+    font-weight: bold;
 }
 
 .control-input {
@@ -44,9 +48,13 @@ li.track:hover {
     margin: 8px;
 }
 
+.search {
+    padding: 8px 0;
+}
+
 .search-btn {
     box-sizing: border-box;
-    border-radius: 128px;
+    border-radius: 4px;
     min-width: 134px;
     height: 40px;
     border: 3px solid #036497;
@@ -56,6 +64,24 @@ li.track:hover {
 }
 
 .search-btn:hover {
+    background: #0375b0;
+    border: 3px solid #0375b0;
+    cursor: pointer;
+}
+
+.play-btn {
+    box-sizing: border-box;
+    border-radius: 600px;
+    border: 3px solid #0375b0;
+    width: 56px;
+    height: 56px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+    background: #036497;
+}
+
+.play-btn:hover {
     background: #0375b0;
     border: 3px solid #0375b0;
     cursor: pointer;
@@ -73,12 +99,10 @@ li.track:hover {
 }
 
 .media-controls {
-    background: white;
-    display: flex;
-    position: absolute;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    justify-content: center;
-    padding: 10px;
-    /* TODO YVO: Fix responsiveness */
-    margin-top: 713px;
+    padding: 16px 0;
+    background: #fff;
 }
