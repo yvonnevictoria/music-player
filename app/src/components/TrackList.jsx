@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactHowler from 'react-howler'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { MediaControls } from './MediaControls';
+import { SearchBar } from './SearchBar';
 
 import '../stylesheets/MusicPlayer.css';
 
@@ -47,20 +47,11 @@ const TrackList = () => {
 
     return (
         <div className="track-list">
-            <div className="search">
-                <label htmlFor="search-bar">Search music:</label>
-                <input
-                    type="text"
-                    id="search-bar"
-                    name="search-bar"
-                    className="control-input"
-                    value={searchTerm}
-                    onChange={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm });}}
-                />
-                <button type="button" className="search-btn" onClick={() => getTracks({ chosenSearchTerm: searchTerm })}>
-                    Search
-                </button>
-            </div>
+            <SearchBar
+                searchTerm={searchTerm}
+                onChange={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm });}}
+                onSearch={() =>  getTracks({ chosenSearchTerm: searchTerm })}
+            />
 
             { !!errors.length && `${errors}` }
 
@@ -88,14 +79,7 @@ const TrackList = () => {
 
             {
                 songPlaying > 0 && (
-                    <div className="media-controls">
-                        <button type="button" className="search-btn" onClick={() => setAudio({ ...audio, playing: !audio.playing })}>
-                            { !!audio.playing
-                                ? <FontAwesomeIcon icon={faPause} />
-                                : <FontAwesomeIcon icon={faPlay} />
-                            }
-                        </button>
-                    </div>
+                    <MediaControls audio={audio} setAudio={setAudio} />
                 )
             }
         </div>
