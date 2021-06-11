@@ -1,12 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactHowler from 'react-howler'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons'
+
 import '../stylesheets/MusicPlayer.css';
 
 const TrackList = () => {
     const [tracks, setTracks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [audio, setAudio] = useState({ playing: false, url: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview118/v4/57/93/94/57939483-f16a-3fee-dd39-de7df73e8413/mzaf_5320784781866992253.plus.aac.p.m4a' });
+    const [songPlaying, setSongPlaying] = useState(0);
     const [errors, setErrors] = useState([]);
 
     const getTracks = ({ chosenSearchTerm }) => {
@@ -29,10 +33,11 @@ const TrackList = () => {
         return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     }
 
-    const changeAudio = ({ url }) => {
+    const changeAudio = ({ url, trackId }) => {
         // Stop current audio and clear selection. TODO YVO: Does React Howler provide something here?
         setAudio({ url: '', playing: false });
         setAudio({ url, playing: true });
+        setSongPlaying(trackId)
     }
 
 
@@ -41,7 +46,7 @@ const TrackList = () => {
     }, []);
 
     return (
-        <Fragment>
+        <div className="track-list">
             <div className="search">
                 <label htmlFor="search-bar">Search music:</label>
                 <input
@@ -50,16 +55,12 @@ const TrackList = () => {
                     name="search-bar"
                     className="control-input"
                     value={searchTerm}
-                    onChange={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm }); console.log(searchTerm)}}
+                    onChange={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm });}}
                 />
                 <button type="button" className="search-btn" onClick={() => getTracks({ chosenSearchTerm: searchTerm })}>
                     Search
                 </button>
             </div>
-
-            <button type="button" className="search-btn" onClick={() => setAudio({ ...audio, playing: !audio.playing })}>
-                Pause
-            </button>
 
             { !!errors.length && `${errors}` }
 
@@ -71,7 +72,7 @@ const TrackList = () => {
                 Object.entries(tracks).map((track, i) => {
                     const { artistName, trackName, trackTimeMillis, collectionName, trackId, previewUrl, artworkUrl60 } = track[1];
                     return (
-                        <li role="button" className="track" onClick={() => changeAudio({ url: previewUrl })} key={trackId}>
+                        <li role="button" className="track" onClick={() => changeAudio({ url: previewUrl, trackId })} key={trackId}>
                             <img className="album-art" src={artworkUrl60} alt='Album artwork' />
                             <div className="track-info">
                                 <span>{trackName}</span>
@@ -84,16 +85,23 @@ const TrackList = () => {
             }
             </ol>
             <ReactHowler src={audio.url} playing={audio.playing} />
-        </Fragment>
+
+            {
+                songPlaying > 0 && (
+                    <div className="media-controls">
+                        <button type="button" className="search-btn" onClick={() => setAudio({ ...audio, playing: !audio.playing })}>
+                            { !!audio.playing
+                                ? <FontAwesomeIcon icon={faPause} />
+                                : <FontAwesomeIcon icon={faPlay} />
+                            }
+                        </button>
+                    </div>
+                )
+            }
+        </div>
     );
 };
 
 export {
     TrackList
 };
-
-/*
-TODO YVO: add
-onKeyDown={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm });}}
-
-*/

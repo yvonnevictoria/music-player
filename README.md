@@ -41,3 +41,5 @@
 - Spent an hour playing with Howler.js wondering why I couldn't get the `sound.stop()` or `sound.pause()` funcs to work. Turns out it doesn't work with React. Ended up using `ReactHowler` which isn't as nice (i.e. stopping functionality is strange to implement).
 
 - Used `create-react-app` to save time. I know it's your fav @Chris.
+
+- In order to auto search items (without pressing search button), I attached the handler onto the `onChange`. This does mean, however, the search bar will be one letter behind. Decided this was an acceptable trade off.
