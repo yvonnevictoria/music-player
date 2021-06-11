@@ -18,6 +18,12 @@ const init = async () => {
         handler: MusicHandler.getMusicBySearchTerm
     });
 
+    server.route({
+        method: 'GET',
+        path: '/album/{id}',
+        handler: MusicHandler.getAlbum
+    });
+
     await server.start();
     console.log('Server running on %s', server.info.uri);
 };

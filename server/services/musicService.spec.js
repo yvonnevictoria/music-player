@@ -53,3 +53,40 @@ test.serial(`getTracks | should throw NOT_FOUND error if search term returns no 
 
     t.is(err.message, 'NOT_FOUND');
 });
+
+
+test.serial('getAlbum | should return artwork songs from specified album', async t => {
+    const apiReply = {
+        resultCount: 2,
+        results: [
+            { trackName: 'Test track' },
+            { trackName: 'Test track2' }
+        ]
+    };
+
+    nock(`https://itunes.apple.com/lookup`)
+        .get(`?id=1440857781&entity=song`)
+        .reply(200, apiReply);
+
+    const tracks = await MusicService.getAlbum({ albumId: '1440857781' });
+
+    t.deepEqual(tracks, [
+        { trackName: 'Test track' },
+        { trackName: 'Test track2' }
+    ]);
+});
+
+test.serial(`getAlbum | should throw NOT_FOUND error if search term returns no results`, async t => {
+    const apiReply = {
+        resultCount: 0,
+        results: []
+    };
+
+    nock(`https://itunes.apple.com/lookup`)
+        .get(`?id=1440857781&entity=song`)
+        .reply(200, apiReply);
+
+    const err = await t.throwsAsync(MusicService.getAlbum({ albumId: '1440857781' }));
+
+    t.is(err.message, 'NOT_FOUND');
+});

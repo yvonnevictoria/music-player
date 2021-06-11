@@ -33,5 +33,32 @@ module.exports = {
                     return h.response().code(500)
             }
         }
+    },
+
+    /**
+     *  Get track info.
+     *
+     * @param {Request} request - The Hapi request object.
+     * @param {Object} h - The Hapi response toolkit.
+     * @throws {Error} NOT_FOUND - If album does not exist.
+     * @throws {Error} If an unknown error occurred.
+     * @returns {Response} Album info - tracks and artwork.
+     */
+    getAlbum: async (request, h) => {
+        try {
+            const { id } = request.params;
+
+            const album = await MusicService.getAlbum({ albumId: id });
+            return h.response(album).code(200)
+
+        } catch (err) {
+            console.log(err);
+            switch (err.message) {
+                case 'NOT_FOUND':
+                    return h.response('No album results').code(404)
+                default:
+                    return h.response().code(500)
+            }
+        }
     }
 };

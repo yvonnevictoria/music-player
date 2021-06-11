@@ -36,3 +36,29 @@ test.serial('GET /music | should throw NOT_FOUND if no results returned for supp
     t.is(statusCode, 404);
     t.is(result, 'No results')
 });
+
+test.serial('GET /album | should return album artwork and songs', async t => {
+    sandbox.stub(MusicService, 'getAlbum').resolves([{ trackName: 'test' }]);
+
+    const request = {
+        method: 'GET',
+        url: `/album/12345`
+    };
+
+    const { result, statusCode } = await server.inject(request);
+    t.is(statusCode, 200);
+    t.deepEqual(result, [{ trackName: 'test' }]);
+});
+
+test.serial('GET /album | should throw NOT_FOUND if no results returned for supplied search term', async t => {
+    sandbox.stub(MusicService, 'getAlbum').rejects(new Error('NOT_FOUND'));
+
+    const request = {
+        method: 'GET',
+        url: `/album/12345`
+    };
+
+    const { result, statusCode } = await server.inject(request);
+    t.is(statusCode, 404);
+    t.is(result, 'No album results')
+});

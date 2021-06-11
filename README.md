@@ -46,8 +46,6 @@
 
 - I used the preview urls rather than the full songs due to API restrictions.
 
-- I completed most of the features listed. I completed all of the requirements on page 2. However, I was not able to complete the album feature in the time limit. I decided to focus on writing better tests instead. Can add retrospectively if you are happy for me to go over the time limit.
-
 ## Feature gaps I'd add in for a bigger project:
 - Next and back buttons
 - Queueing

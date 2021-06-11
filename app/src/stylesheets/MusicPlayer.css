@@ -1,0 +1,4 @@
+.music-player {
+    display: flex;
+    flex-direction: row;
+}
