@@ -1,6 +1,7 @@
 .track-list {
     display: flex;
     flex-direction: column;
+    min-width: 60%;
 }
 
 ol.tracks {

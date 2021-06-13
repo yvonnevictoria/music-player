@@ -7,7 +7,8 @@ import '../stylesheets/MusicPlayer.css';
 
 const MusicPlayer = () => {
     const [songPlaying, setSongPlaying] = useState({ trackId: 0, collectionId: 0 });
-    const [audio, setAudio] = useState({ playing: false, url: '' });
+    // Howler needs valid url when initialised. This url won't be used.
+    const [audio, setAudio] = useState({ playing: false, url: 'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/a2/d3/b3/a2d3b33f-e6b3-cbd8-6efb-fa9ecb9c668a/mzaf_16013347745276122340.plus.aac.p.m4a' });
     const [album, setAlbum] = useState({ name: '', artwork: '', tracks: []});
     const [errors, setErrors] = useState('');
 

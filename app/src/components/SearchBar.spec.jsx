@@ -29,7 +29,6 @@ describe('SearchBar', () => {
             wrapper.find('button').prop('onClick')();
         });
 
-        // TODO YVO: Broken because of () => {}
         expect(requiredProps.onSearch).toHaveBeenCalledTimes(1);
     });
 
