@@ -6,7 +6,7 @@ import { SearchBar } from './SearchBar';
 
 import '../stylesheets/TrackList.css';
 
-const TrackList = ({ songPlaying, setSongPlaying, audio, setAudio }) => {
+const TrackList = ({ songPlaying, setSongPlaying, audio, setAudio, changeAudio }) => {
     const [tracks, setTracks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [errors, setErrors] = useState([]);
@@ -18,7 +18,6 @@ const TrackList = ({ songPlaying, setSongPlaying, audio, setAudio }) => {
         axios.get(`http://localhost:4000/music?searchTerm=${cleanedSearchTerm}`)
             .then(function (response) {
                 const { data } = response;
-                console.log(data);
                 setTracks(data);
             })
             .catch(function (error) {
@@ -30,15 +29,7 @@ const TrackList = ({ songPlaying, setSongPlaying, audio, setAudio }) => {
         let minutes = Math.floor(ms / 60000);
         let seconds = ((ms % 60000) / 1000).toFixed(0);
         return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-    }
-
-    const changeAudio = ({ url, trackId, collectionId }) => {
-        // Stop current audio and clear selection. TODO YVO: Does React Howler provide something here?
-        setAudio({ url: '', playing: false });
-        setAudio({ url, playing: true });
-        setSongPlaying({ trackId, collectionId })
-    }
-
+    };
 
     useEffect(() => {
         getTracks({ chosenSearchTerm: 'jack+johnson' });
@@ -48,21 +39,21 @@ const TrackList = ({ songPlaying, setSongPlaying, audio, setAudio }) => {
         <div className="track-list">
             <SearchBar
                 searchTerm={searchTerm}
-                onChange={({ target: { value } }) => {setSearchTerm(value); getTracks({ chosenSearchTerm: searchTerm });}}
+                onChange={({ target: { value } }) => { setSearchTerm(value); getTracks({ chosenSearchTerm: value }); }}
                 onSearch={() => getTracks({ chosenSearchTerm: searchTerm })}
             />
 
             { !!errors.length && `${errors}` }
 
             {
-                // Using list item for screen reader compatibility (link in readme)
+                // Using list item for screen reader compatibility (info in readme)
             }
             <ol className="tracks">
             {
                 Object.entries(tracks).map((track, i) => {
                     const { artistName, trackName, trackTimeMillis, collectionName, collectionId, trackId, previewUrl, artworkUrl60 } = track[1];
                     return (
-                        <li role="button" className={`track ${songPlaying === trackId && 'active-song'}`} onClick={() => changeAudio({ url: previewUrl, trackId, collectionId })} key={trackId}>
+                        <li role="button" className={`track ${songPlaying.trackId === trackId && 'active-song'}`} onClick={() => changeAudio({ url: previewUrl, trackId, collectionId })} key={trackId}>
                             <img className="album-art" src={artworkUrl60} alt='Album artwork' />
                             <div className="track-info">
                                 <span>{trackName}</span>

@@ -57,8 +57,9 @@ test.serial(`getTracks | should throw NOT_FOUND error if search term returns no 
 
 test.serial('getAlbum | should return artwork songs from specified album', async t => {
     const apiReply = {
-        resultCount: 2,
+        resultCount: 3,
         results: [
+            { albumName: 'Test album' },
             { trackName: 'Test track' },
             { trackName: 'Test track2' }
         ]
@@ -71,6 +72,7 @@ test.serial('getAlbum | should return artwork songs from specified album', async
     const tracks = await MusicService.getAlbum({ albumId: '1440857781' });
 
     t.deepEqual(tracks, [
+        { albumName: 'Test album' },
         { trackName: 'Test track' },
         { trackName: 'Test track2' }
     ]);

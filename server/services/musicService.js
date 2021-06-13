@@ -48,9 +48,7 @@ class MusicService {
      */
     static async getTracks({ searchTerm }) {
         const targetUrl = searchTracksUrl({ searchTerm });
-        const { data } = await axios.get(targetUrl);
-
-        const { results } = data;
+        const { data: { results } } = await axios.get(targetUrl);
 
         if (!results.length) {
             throw new Error('NOT_FOUND');

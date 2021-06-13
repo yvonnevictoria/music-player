@@ -1,4 +1,26 @@
+.album-list {
+    display: flex;
+    flex-direction: column;
+    background: #f2f2f2;
+    border: 1px solid #e2e2e2;
+    min-width: 40%;
+    max-width: 40%;
+    padding: 10px;
+}
+
+@media (max-width: 414px) {
+    .album-list {
+        display: none;
+    }
+}
+
 .album-art-100 {
     width: 100px;
     height: 100px;
+    align-self: center;
+    padding: 8px;
+}
+
+.album-name {
+    font-weight: bold;
 }

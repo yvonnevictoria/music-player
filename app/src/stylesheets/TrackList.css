@@ -8,6 +8,7 @@ ol.tracks {
     background: #f2f2f2;
     display: flex;
     flex-flow: column;
+    border-top: 1px solid #e2e2e2;
 
     /* Get rid of automatic margins */
     margin: 0 0 0 -40px;
@@ -17,13 +18,7 @@ ol.tracks {
 }
 
 li.track {
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    text-align: left;
     cursor: pointer;
-    margin: 0 10%;
-    align-items: center;
 }
 
 li.track:hover {
@@ -48,7 +43,7 @@ li.active-song {
 }
 
 .search {
-    padding: 8px 0;
+    padding: 8px 4px;
 }
 
 .search-btn {

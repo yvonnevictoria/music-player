@@ -1,4 +1,14 @@
-.music-player {
+/* Not the most ideal name, but trying to indicate it will display more than just searched tracks */
+.music-player-with-album {
     display: flex;
     flex-direction: row;
+}
+
+li {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    margin: 0 10%;
+    align-items: center;
 }

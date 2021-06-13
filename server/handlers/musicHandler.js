@@ -25,7 +25,6 @@ module.exports = {
             return h.response(searchResults).code(200)
 
         } catch (err) {
-            console.log(err);
             switch (err.message) {
                 case 'NOT_FOUND':
                     return h.response('No results').code(404)
@@ -47,12 +46,14 @@ module.exports = {
     getAlbum: async (request, h) => {
         try {
             const { id } = request.params;
+            const albumTracks = await MusicService.getAlbum({ albumId: id });
+            const { collectionName, artworkUrl100 } = albumTracks[0];
 
-            const album = await MusicService.getAlbum({ albumId: id });
-            return h.response(album).code(200)
+            // Remove first entry (album info) from API results
+            const album = albumTracks.filter(track => track.wrapperType === 'track');
+            return h.response({ album, collectionName, artworkUrl100 }).code(200)
 
         } catch (err) {
-            console.log(err);
             switch (err.message) {
                 case 'NOT_FOUND':
                     return h.response('No album results').code(404)

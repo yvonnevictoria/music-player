@@ -37,8 +37,12 @@ test.serial('GET /music | should throw NOT_FOUND if no results returned for supp
     t.is(result, 'No results')
 });
 
-test.serial('GET /album | should return album artwork and songs', async t => {
-    sandbox.stub(MusicService, 'getAlbum').resolves([{ trackName: 'test' }]);
+test.serial('GET /album | should return album artwork, name and songs', async t => {
+    sandbox.stub(MusicService, 'getAlbum').resolves([
+        { collectionName: 'text', artworkUrl100: 'url.com', wrapperType: 'album' },
+        { trackName: 'test', wrapperType: 'track' },
+        { trackName: 'test 2', wrapperType: 'track' }
+    ]);
 
     const request = {
         method: 'GET',
@@ -47,7 +51,14 @@ test.serial('GET /album | should return album artwork and songs', async t => {
 
     const { result, statusCode } = await server.inject(request);
     t.is(statusCode, 200);
-    t.deepEqual(result, [{ trackName: 'test' }]);
+    t.deepEqual(result, {
+         collectionName: 'text',
+         artworkUrl100: 'url.com',
+         album: [
+             { trackName: 'test', wrapperType: 'track' },
+             { trackName: 'test 2', wrapperType: 'track' }
+         ]
+    });
 });
 
 test.serial('GET /album | should throw NOT_FOUND if no results returned for supplied search term', async t => {
