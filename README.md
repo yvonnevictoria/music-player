@@ -1,12 +1,15 @@
 # Music player
 - Mobile view
-![alt text](./assets/screenshot-mobile.png "Screenshot of app with mobile view")
+
+![alt text](./assets/screenshot-mobile-adj.png "Screenshot of app with mobile view")
 
 - iPad/Tablet view
-![alt text](./assets/screenshot-ipad.png "Screenshot of app with tablet view")
+
+![alt text](./assets/screenshot-ipad-adj.png "Screenshot of app with tablet view")
 
 - Desktop view
-![alt text](./assets/screenshot-desktop.png "Screenshot of app with desktop view")
+
+![alt text](./assets/screenshot-desktop-adj.png "Screenshot of app with desktop view")
 
 # Running the app
 ## Prerequisites
