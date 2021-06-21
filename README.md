@@ -1,3 +1,13 @@
+# Music player
+- Mobile view
+![alt text](./assets/screenshot-mobile.png "Screenshot of app with mobile view")
+
+- iPad/Tablet view
+![alt text](./assets/screenshot-ipad.png "Screenshot of app with tablet view")
+
+- Desktop view
+![alt text](./assets/screenshot-desktop.png "Screenshot of app with desktop view")
+
 # Running the app
 ## Prerequisites
 - Must run on React 16 or tests will break.
